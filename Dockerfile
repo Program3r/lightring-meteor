@@ -13,3 +13,5 @@ RUN npm install
 ENV MONGO_URL mongodb://172.17.42.1:27017/led
 ENV ROOT_URL http://localhost
 ENV PORT 3000
+WORKDIR /root/bundle
+ENTRYPOINT ["/usr/local/bin/node", "main.js"]
