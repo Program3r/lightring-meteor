@@ -11,13 +11,10 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0.4.2');
-  api.use('clode:eric-led-data');
+  api.versionsFrom('1.1.0.2');
+  api.use(['clode:eric-led-data']);
   api.addFiles('eric-led.js');
+
 });
 
-Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('clode:eric-led');
-  api.addFiles('eric-led-tests.js');
-});
+Npm.depends({"rpi-ws281x-native": "0.3.0"});

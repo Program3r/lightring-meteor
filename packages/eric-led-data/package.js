@@ -11,13 +11,8 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0.4.2');
+  api.versionsFrom('1.1.0.2');
+  api.use('fds:streams');
   api.addFiles('eric-led-data.js');
-  api.export('led');
-});
-
-Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('clode:eric-led-data');
-  api.addFiles('eric-led-data-tests.js');
+  api.export(['led','colorstream']);
 });

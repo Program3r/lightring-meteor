@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'clode:eric-led-ui',
+  name: 'clode:led-menu',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -11,14 +11,8 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.0');
-  api.use(['templating'], 'client');
-  api.addFiles(['ui.html','eric-led-ui.js','style.css'], 'client');
-  api.export('surfaces');
-});
-
-Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('clode:eric-led-ui');
-  api.addFiles('eric-led-ui-tests.js');
+  api.versionsFrom('1.1.0.2');
+  api.use(['clode:famous','clode:eric-led-data','claviska:jquery-minicolors','session','matb33:bootstrap-glyphicons']);
+  api.addFiles(['led-menu.js','style.css'],'client');
+  api.addFiles(['led-backend.js'],'server');
 });

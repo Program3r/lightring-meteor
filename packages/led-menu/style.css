@@ -1,0 +1,23 @@
+.minicolors-panel{
+    border:none;
+    background:transparent;
+}
+.minicolors-slider{
+    border-radius:15px;
+}
+.minicolors-slider, .minicolors-opacity-slider{
+    margin-left:16px;
+}
+@keyframes animatedBackground {
+	from { background-position: 0 0; }
+	to { background-position: 100% 0; }
+}
+body{
+	height: 100%;
+	background-size:auto 100%;
+	background-image: url(http://davidwalsh.name/demo/bg-clouds.png);
+	background-position: 0px 0px;
+	background-repeat: repeat-x;
+
+	animation: animatedBackground 200s linear infinite;
+}
