@@ -1,6 +1,6 @@
 // Write your package code here!
 if(Meteor.isServer){
-    ws281x = Npm.require('node-rpi-ws281x-native');
+    ws281x = Npm.require('rpi-ws281x-native');
     pixelData = new Uint32Array(24);
     ws281x.init(24);
     function rgb2Int(a) {
