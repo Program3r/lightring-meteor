@@ -10,6 +10,8 @@ RUN wget https://github.com/Program3r/lightring-meteor/releases/download/0.1.1/l
 RUN tar -xvf lightring-meteor.tar.gz
 WORKDIR /root/bundle/programs/server
 RUN npm install
+WORKDIR /root/bundle/programs/server/npm/clode_eric-led
+RUN npm install rpi-ws281x-native
 ENV MONGO_URL mongodb://172.17.42.1:27017/led
 ENV ROOT_URL http://localhost
 ENV PORT 3000
