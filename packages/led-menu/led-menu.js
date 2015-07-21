@@ -75,7 +75,7 @@ leds = {};
 
 function getPosition(index){
     var radius = 180;
-    var width = 90, height = 85,
+    var width = 100, height = -200,
     step = (2*Math.PI) / led.find().count();
     angle = step * index;
     var x = Math.round(width/2 + radius * Math.cos(angle) - 0/2);
