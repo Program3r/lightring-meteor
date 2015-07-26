@@ -1,4 +1,4 @@
-Session.setDefault('clientID', led._makeNewID());
+
 var FamousEngine = famous.core.FamousEngine;
 FamousEngine.init();
 ClodeScene = FamousEngine.createScene();
@@ -14,6 +14,59 @@ var Center = ClodeScene.addChild()
 
 var CenterDom = new DOMElement(Center, {
 });
+
+var tester = Center.addChild()
+.setSizeMode(Node.ABSOLUTE_SIZE,Node.ABSOLUTE_SIZE,Node.ABSOLUTE_SIZE)
+.setAbsoluteSize(50,50,1)
+.setPosition(50,-80);
+var TesterDom = new DOMElement(tester, {
+    properties:{
+        borderRadius:'33px',
+        color:'black',
+        background:'white',
+        border:'1px solid black',
+        cursor:'pointer',
+        padding:'15px',
+        textAlign: 'center'
+    },
+    classes:["glyphicon"]
+})
+tester.onReceive = function(){
+    if(!Meteor.status().connected){
+        Meteor.reconnect();
+    }else{
+        colorstream.emit('ledtest', {});
+    }
+}
+tester.addUIEvent('click');
+uiStatus = function(status){
+    TesterDom.removeClass('glyphicon-flash');
+    TesterDom.removeClass('glyphicon-signal');
+    TesterDom.removeClass('glyphicon-refresh');
+    switch(status.status){
+        case "connecting":
+            TesterDom.addClass('glyphicon-refresh');
+            break;
+        case "connected":
+            TesterDom.addClass('glyphicon-signal');
+            break;
+        default:
+            TesterDom.addClass('glyphicon-flash');
+            break;
+    }
+}
+
+var retryCount = 0;
+Tracker.autorun(function(){
+    uiStatus(Meteor.status());
+    if(Meteor.status().connected && retryCount > 0){
+        console.log("RELOADING UI");
+        document.location.reload();
+    }
+    retryCount = Meteor.status().retryCount;
+})
+
+
 
 var found = false;
 var cid = Center.addComponent({
@@ -34,27 +87,13 @@ var cid = Center.addComponent({
                                     led.find({active:true}).fetch().forEach(function(doc){
                                         Meteor.call("ledupdate", doc._id, hex);
                                     });
-
-                                    colorstream.emit('colorchange', {color:hex,cid:Session.get("clientID")});
+                                    colorstream.emit('colorchange', {});
                                 }
                             },
                             control:'wheel',
                             changeDelay:5,
                             inline:true,
                             theme: 'default'
-                        });
-                        var reset = function(){
-                            active = Session.get("clientID")
-                        }
-                        var resetTimer = setTimeout(reset, 500);
-
-                        colorstream.on('colorchange', function(obj) {
-                            active = obj.cid;
-                            if(Session.get("clientID") !== active){
-                                $(div).minicolors('value', obj.color);
-                            }
-                            clearTimeout(resetTimer);
-                            resetTimer = setTimeout(reset, 500);
                         });
                     found = true;
                     break;

@@ -1,3 +1,4 @@
+
 if(Meteor.isServer){
     led = new Meteor.Collection("LED", {connection:null});
 }else{

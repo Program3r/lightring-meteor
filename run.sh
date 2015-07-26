@@ -1,1 +1,1 @@
-docker run -t -i -d --restart=always -p 80:3000 --privileged clode-lightring-meteor
+docker run -t -i -d -v /home/pi/root:/root/bundle --restart=always -p 80:3000 --privileged clode-lightring-meteor

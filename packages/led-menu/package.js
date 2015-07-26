@@ -12,7 +12,7 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
-  api.use(['clode:famous','clode:eric-led-data','claviska:jquery-minicolors','session','matb33:bootstrap-glyphicons']);
+  api.use(['clode:famous','clode:eric-led-data','claviska:jquery-minicolors','session','matb33:bootstrap-glyphicons', 'tracker']);
   api.addFiles(['led-menu.js','style.css'],'client');
   api.addFiles(['led-backend.js'],'server');
 });

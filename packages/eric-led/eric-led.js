@@ -1,34 +1,56 @@
 // Write your package code here!
 if(Meteor.isServer){
+
     ws281x = Npm.require('rpi-ws281x-native');
     pixelData = new Uint32Array(24);
     ws281x.init(24);
-    function rgb2Int(a) {
 
-      return ((a[0] & 0xff) << 16) + ((a[1] & 0xff) << 8) + (a[2] & 0xff);
-    }
-    
-    
-    
-    led.find({tags:{$in:["clode:LED"]}, color:{$exists:true}, index:{$exists:true}}).observeChanges({
-        "added":function(id, doc){
-            pixelData[doc.index] = rgb2Int(doc.color);
-            ws281x.render(pixelData);
-        },
-        "changed":function(id, doc){
-            var org = led.findOne(id);
-            pixelData[org.index] = rgb2Int(doc.color);
-            ws281x.render(pixelData);
-        },
-        "removed":function(id, doc){
-            var org = led.findOne(id);
-            pixelData[org.index] = rgb2Int([0,0,0]);
-            ws281x.render(pixelData);
+    var render = function(){
+        var data = led.find({});
+        var dataf = data.fetch();
+        for (var i = 0; i < data.count(); i++) {
+
+            var nohash = dataf[i].color.replace("#", "");
+            var colorLen = (6 - nohash.length);
+            for (var j = 0; j < colorLen; j++) {
+                nohash += "0";
+            }
+            nohash = "0x" + nohash;
+            pixelData[i] = nohash;
         }
+        ws281x.render(pixelData);
+    }
+    var runtest = function(){
+        var offset=0;
+        var clear = Meteor.setInterval(function () {
+          var i=24;
+          while(i--) {
+              pixelData[i] = 0;
+          }
+          pixelData[offset] = 0xffffff;
+
+          offset = (offset + 1) % 24;
+          ws281x.render(pixelData);
+        }, 100);
+        Meteor.setTimeout(function(){
+            Meteor.clearInterval(clear);
+        }, 100 * 24)
+    }
+
+    var startup = Meteor.setInterval(runtest, 105*24);
+
+    colorstream.on('colorchange', function(message) {
+        Meteor.clearInterval(startup);
+        render();
+
     });
-    
-    
-    
+
+    colorstream.on('ledtest', function(message) {
+        Meteor.clearInterval(startup);
+        runtest();
+    });
+
+
     process.on('SIGINT', function () {
       ws281x.reset();
       process.nextTick(function () { process.exit(0); });

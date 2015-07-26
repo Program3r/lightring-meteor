@@ -8,7 +8,8 @@ Meteor.publish(null, function(){
     })*/
 });
 
-
-for(var i=0;i < 23; i++){
-    led.insert({color:"#FFF", index:i});
+if(led.find().count() == 0){
+    for(var i=0;i < 23; i++){
+        led.insert({color:"#FFF", index:i});
+    }
 }
