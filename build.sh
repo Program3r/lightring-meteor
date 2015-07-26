@@ -1,1 +1,1 @@
-docker build -t "clode-lightring-meteor" .
+docker build -t "clode/rpi-lightring-meteor:latest" .
