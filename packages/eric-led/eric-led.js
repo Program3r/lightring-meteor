@@ -23,8 +23,8 @@ if(Meteor.isServer){
     var runtest = function(){
         var offset=0;
         var clear = Meteor.setInterval(function () {
-          var i=24;
-          while(i--) {
+          var count=24;
+          for (var i = 0; i < count; i++) {
               pixelData[i] = 0;
           }
           pixelData[offset] = 0xffffff;

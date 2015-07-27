@@ -6,7 +6,7 @@ RUN dpkg -i node_latest_armhf.deb
 RUN rm node_latest_armhf.deb
 RUN apt-get install -y build-essential python
 WORKDIR /root
-RUN wget https://github.com/Program3r/lightring-meteor/releases/download/v0.1.7/lightring-meteor.tar.gz
+RUN wget https://github.com/Program3r/lightring-meteor/releases/download/v0.1.8/lightring-meteor.tar.gz
 RUN tar -xvf lightring-meteor.tar.gz
 WORKDIR /root/bundle/programs/server
 RUN npm install

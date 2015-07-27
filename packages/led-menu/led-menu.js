@@ -39,6 +39,41 @@ tester.onReceive = function(){
     }
 }
 tester.addUIEvent('click');
+
+
+
+var selectAllNone = Center.addChild()
+.setSizeMode(Node.ABSOLUTE_SIZE,Node.ABSOLUTE_SIZE,Node.ABSOLUTE_SIZE)
+.setAbsoluteSize(50,50,1)
+.setPosition(-30,-30);
+
+var SelectAllNoneDom = new DOMElement(selectAllNone, {
+    properties:{
+        borderRadius:'33px',
+        color:'black',
+        background:'white',
+        border:'1px solid black',
+        cursor:'pointer',
+        padding:'14px',
+        fontSize:'20px',
+        textAlign: 'center'
+    },
+    classes:["glyphicon","glyphicon-heart"]
+})
+selectAllNone.onReceive = function(){
+    var leds = led.find().fetch();
+    if(led.find({active:true}).count() === 0){
+        leds.forEach(function(doc){
+            Meteor.call("ledactive",doc._id,true);
+        });
+    }else{
+        leds.forEach(function(doc){
+            Meteor.call("ledactive",doc._id,false);
+        });
+    }
+}
+selectAllNone.addUIEvent('click');
+
 uiStatus = function(status){
     TesterDom.removeClass('glyphicon-flash');
     TesterDom.removeClass('glyphicon-signal');
