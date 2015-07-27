@@ -9,7 +9,7 @@ Meteor.publish(null, function(){
 });
 
 if(led.find().count() == 0){
-    for(var i=0;i < 23; i++){
+    for(var i=0;i < 24; i++){
         led.insert({color:"#FFF", index:i});
     }
 }
