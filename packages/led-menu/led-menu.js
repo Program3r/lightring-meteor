@@ -18,7 +18,7 @@ var CenterDom = new DOMElement(Center, {
 var tester = Center.addChild()
 .setSizeMode(Node.ABSOLUTE_SIZE,Node.ABSOLUTE_SIZE,Node.ABSOLUTE_SIZE)
 .setAbsoluteSize(50,50,1)
-.setPosition(50,-80);
+.setPosition(50,-60);
 var TesterDom = new DOMElement(tester, {
     properties:{
         borderRadius:'33px',
